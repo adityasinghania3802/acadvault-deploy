@@ -1,0 +1,79 @@
+# The name of the workflow.
+name: Build and Deploy
+
+# Run the workflow when code is pushed to the main branch
+on:
+  push:
+    branches:
+      - main
+
+# Set environment variables
+env:
+  MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
+  AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+  AUTH0_ISSUER_BASE_URL: ${{ secrets.AUTH0_ISSUER_BASE_URL }}
+  VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+  VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
+  VITE_AUTH0_CLIENT_ID: ${{ secrets.VITE_AUTH0_CLIENT_ID }}
+  VITE_AUTH0_CALLBACK_URL: ${{ secrets.VITE_AUTH0_CALLBACK_URL }}
+  VITE_AUTH0_AUDIENCE: ${{ secrets.VITE_AUTH0_AUDIENCE }}
+
+# This is the workflow that is being run.
+jobs:
+  build-and-deploy:
+    # This is telling GitHub to run the workflow on the latest version of Ubuntu.
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code from the GitHub repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install dependencies and run tests for the client application
+      - name: Install Client
+        working-directory: ./frontend
+        run: |
+          npm install
+          export VITE_API_BASE_URL=$VITE_API_BASE_URL
+          export VITE_AUTH0_DOMAIN=$VITE_AUTH0_DOMAIN
+          export VITE_AUTH0_CLIENT_ID=$VITE_AUTH0_CLIENT_ID
+          export VITE_AUTH0_CALLBACK_URL=$VITE_AUTH0_CALLBACK_URL
+          export VITE_AUTH0_AUDIENCE=$VITE_AUTH0_AUDIENCE
+          npm run test
+
+      # Install dependencies, export environment variables to be used by application and run tests for the server application
+      - name: Install Server
+        working-directory: ./backend
+        run: |
+          npm install
+          export MONGODB_CONNECTION_STRING=$MONGODB_CONNECTION_STRING
+          export AUTH0_AUDIENCE=$AUTH0_AUDIENCE
+          export AUTH0_ISSUER_BASE_URL=$AUTH0_ISSUER_BASE_URL
+          npm run test
+
+      # Build a Docker image for the client application
+      - name: Build Client Docker Image
+        working-directory: ./frontend
+        # Build image with tag rakeshpotnuru/productivity-app:client
+        run: |
+          docker build -t bmpcourse/acadvault-deploy:frontend-${{github.run_number}} .
+
+      # Build a Docker image for the server application
+      - name: Build Server Docker Image
+        working-directory:
+          ./backend
+          # Build image with tag rakeshpotnuru/productivity-app:server
+        run: |
+          docker build -t bmpcourse/acadvault-deploy:backend-${{github.run_number}} .
+
+      # Login to Docker Hub using credentials from repository secrets
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Push the Docker images to Docker Hub
+      - name: Push Docker Images to Docker Hub
+        run: |
+          docker push bmpcourse/acadvault-deploy:frontend-${{github.run_number}}
+          docker push bmpcourse/acadvault-deploy:backend-${{github.run_number}}
