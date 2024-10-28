@@ -34,11 +34,6 @@ jobs:
         working-directory: ./frontend
         run: |
           npm install
-          export VITE_API_BASE_URL=$VITE_API_BASE_URL
-          export VITE_AUTH0_DOMAIN=$VITE_AUTH0_DOMAIN
-          export VITE_AUTH0_CLIENT_ID=$VITE_AUTH0_CLIENT_ID
-          export VITE_AUTH0_CALLBACK_URL=$VITE_AUTH0_CALLBACK_URL
-          export VITE_AUTH0_AUDIENCE=$VITE_AUTH0_AUDIENCE
           npm run test
 
       # Install dependencies, export environment variables to be used by application and run tests for the server application
@@ -56,7 +51,13 @@ jobs:
         working-directory: ./frontend
         # Build image with tag rakeshpotnuru/productivity-app:client
         run: |
-          docker build -t bmpcourse/acadvault-deploy:frontend-${{github.run_number}} .
+          docker build \
+          --build-arg VITE_API_BASE_URL=$VITE_API_BASE_URL \
+          --build-arg VITE_AUTH0_DOMAIN=$VITE_AUTH0_DOMAIN \
+          --build-arg VITE_AUTH0_CLIENT_ID=$VITE_AUTH0_CLIENT_ID \
+          --build-arg VITE_AUTH0_CALLBACK_URL=$VITE_AUTH0_CALLBACK_URL \
+          --build-arg VITE_AUTH0_AUDIENCE=$VITE_AUTH0_AUDIENCE \
+          -t bmpcourse/acadvault-deploy:frontend-${{github.run_number}} .
 
       # Build a Docker image for the server application
       - name: Build Server Docker Image
