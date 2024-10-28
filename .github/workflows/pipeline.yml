@@ -41,9 +41,6 @@ jobs:
         working-directory: ./backend
         run: |
           npm install
-          export MONGODB_CONNECTION_STRING=$MONGODB_CONNECTION_STRING
-          export AUTH0_AUDIENCE=$AUTH0_AUDIENCE
-          export AUTH0_ISSUER_BASE_URL=$AUTH0_ISSUER_BASE_URL
           npm run test
 
       # Build a Docker image for the client application
@@ -65,7 +62,11 @@ jobs:
           ./backend
           # Build image with tag rakeshpotnuru/productivity-app:server
         run: |
-          docker build -t bmpcourse/acadvault-deploy:backend-${{github.run_number}} .
+          docker build \
+          --build-arg MONGODB_CONNECTION_STRING=$MONGODB_CONNECTION_STRING \
+          --build-arg AUTH0_AUDIENCE=$AUTH0_AUDIENCE \
+          --build-arg AUTH0_ISSUER_BASE_URL=$AUTH0_ISSUER_BASE_URL \
+          -t bmpcourse/acadvault-deploy:backend-${{github.run_number}} .
 
       # Login to Docker Hub using credentials from repository secrets
       - name: Login to Docker Hub
