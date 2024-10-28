@@ -7,6 +7,7 @@ on:
     branches:
       - main
 
+
 # Set environment variables
 env:
   MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
