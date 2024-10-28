@@ -5,7 +5,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "dev": "nodemon",
-    "test": "echo \"Error: no test specified\" && exit 1 - backend"
+    "test": "echo \"Error: no test specified\" - backend"
   },
   "keywords": [],
   "author": "",

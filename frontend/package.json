@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "echo \"Error: no test specified\" && exit 1 - frontend"
+    "test": "echo \"Error: no test specified\" - frontend"
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
