@@ -18,8 +18,6 @@ ENV VITE_AUTH0_AUDIENCE=${VITE_AUTH0_AUDIENCE}
 
 RUN npm install
 
-# RUN npm install --only=dev
-
 COPY . .
 
 EXPOSE 5173

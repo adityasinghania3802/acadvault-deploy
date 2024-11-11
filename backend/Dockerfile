@@ -14,8 +14,6 @@ ENV AUTH0_ISSUER_BASE_URL=${AUTH0_ISSUER_BASE_URL}
 
 RUN npm install
 
-# RUN npm install --only=dev
-
 COPY . .
 
 EXPOSE 7000
