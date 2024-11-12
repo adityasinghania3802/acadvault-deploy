@@ -23,7 +23,7 @@ const types = [
 export default function CourseContentPage() {
   const { category, code } = useParams();
   return (
-    <div className="flex flex-wrap justify-center lg:justify-start gap-8 m-12">
+    <div className="flex flex-wrap justify-center lg:justify-start gap-6 m-12">
       {types.map((item, index) => (
         <div
           key={index}
