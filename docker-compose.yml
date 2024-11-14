@@ -10,7 +10,7 @@ services:
     ports:
       - "80:80"
 
-  client:
+  frontend:
     image: bmpcourse/acadvault-deploy:frontend-latest
     environment:
       - CHOKIDAR_USEPOLLING=true
@@ -20,7 +20,7 @@ services:
       - VITE_AUTH0_CALLBACK_URL=${VITE_AUTH0_CALLBACK_URL}
       - VITE_AUTH0_AUDIENCE=${VITE_AUTH0_AUDIENCE}
 
-  server:
+  backend:
     image: bmpcourse/acadvault-deploy:backend-latest
     environment:
       - MONGODB_CONNECTION_STRING=${MONGODB_CONNECTION_STRING}
