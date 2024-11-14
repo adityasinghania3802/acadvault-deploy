@@ -43,7 +43,7 @@ jobs:
           --build-arg VITE_AUTH0_CLIENT_ID=$VITE_AUTH0_CLIENT_ID \
           --build-arg VITE_AUTH0_CALLBACK_URL=$VITE_AUTH0_CALLBACK_URL \
           --build-arg VITE_AUTH0_AUDIENCE=$VITE_AUTH0_AUDIENCE \
-          -t bmpcourse/acadvault-deploy:frontend-${{github.run_number}} 
+          -t bmpcourse/acadvault-deploy:frontend-${{github.run_number}} \
           -t bmpcourse/acadvault-deploy:frontend-latest .
 
       - name: Build Server Docker Image
@@ -54,7 +54,7 @@ jobs:
           --build-arg MONGODB_CONNECTION_STRING=$MONGODB_CONNECTION_STRING \
           --build-arg AUTH0_AUDIENCE=$AUTH0_AUDIENCE \
           --build-arg AUTH0_ISSUER_BASE_URL=$AUTH0_ISSUER_BASE_URL \
-          -t bmpcourse/acadvault-deploy:backend-${{github.run_number}} 
+          -t bmpcourse/acadvault-deploy:backend-${{github.run_number}} \
           -t bmpcourse/acadvault-deploy:backend-latest .
 
       # Build a Docker image for the NGINX reverse proxy
