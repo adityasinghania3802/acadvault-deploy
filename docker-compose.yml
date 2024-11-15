@@ -10,6 +10,7 @@ services:
     ports:
       - "80:80"
 
+
   frontend:
     image: bmpcourse/acadvault-deploy:frontend-latest
     environment:
