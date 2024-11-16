@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/user";
+import Announcement from "../models/announcement";
 
 const getCurrentUser = async (req: Request, res: Response) => {
   try {
@@ -56,8 +57,19 @@ const updateCurrentUser = async (req: Request, res: Response) => {
   }
 };
 
+const getAnnouncements = async (req: Request, res:Response) => {
+  try {
+    const allAnnouncement = await Announcement.find({}).sort( { 'timestamp': -1 } );
+    return res.json(allAnnouncement);
+  } catch(error) {
+    console.log(error);
+    res.status(500).json({ message: "Error Loading the Announcement Page" });
+  }
+};
+
 export default {
   getCurrentUser,
   createCurrentUser,
   updateCurrentUser,
+  getAnnouncements,
 };

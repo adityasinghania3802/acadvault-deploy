@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Material from "../models/material";
 import User from "../models/user";
+import Announcement from "../models/announcement";
 
 const createNewMaterial = async (req: Request, res: Response) => {
   try {
@@ -68,6 +69,16 @@ const changeStatusOfUploadedMaterial = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Material Not Found" });
     }
     material.status = status;
+    if(status) {
+      try {
+        const announcement = new Announcement({materialID: material._id, timestamp: Date.now()});
+        await announcement.save();
+      }
+      catch(error) {
+        console.log(error);
+        res.status(500).json({ message: "Error in generating an Announcement for the material" });
+      }
+    }
     material.save();
     return res.status(200).json({ message: "Success" });
   } catch (error) {
