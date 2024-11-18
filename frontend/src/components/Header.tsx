@@ -9,9 +9,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+// import { useGetMyUser } from "@/api/MyUserApi";
 
 const Header = () => {
   const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+  // const {currentUser, isLoading} = useGetMyUser();
   const { logout } = useAuth0();
 
   return (
@@ -24,6 +26,7 @@ const Header = () => {
           AcadVault
         </Link>
       </div>
+      
       <div className="flex float-right justify-between items-center gap-6 mx-10">
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -46,8 +49,6 @@ const Header = () => {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Link
@@ -89,10 +90,9 @@ const Header = () => {
                   Upload Material
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
+            <DropdownMenuItem className="flex bg-white items-center font-bold hover:text-slate-700"
               onClick={() => {
                 logout();
               }}
@@ -101,6 +101,14 @@ const Header = () => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+      </div>
+      <div className="flex float-right justify-between items-center gap-6">
+        <Link
+          to="/announcement"
+          className="flex gap-1 items-center justify-center text-white font-bold"
+        >
+          Announcements
+        </Link>
       </div>
     </div>
   );

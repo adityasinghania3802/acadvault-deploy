@@ -69,9 +69,10 @@ const changeStatusOfUploadedMaterial = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Material Not Found" });
     }
     material.status = status;
-    if(status) {
+    if(material.status === "Accepted") {
       try {
-        const announcement = new Announcement({materialID: material._id, timestamp: Date.now()});
+        const upload = await User.findOne({email: material.user});
+        const announcement = new Announcement({courseCode: material.courseCode, materialName: material.name, Uploader: upload?.name , timestamp: Date.now()});
         await announcement.save();
       }
       catch(error) {

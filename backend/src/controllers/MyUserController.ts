@@ -60,6 +60,7 @@ const updateCurrentUser = async (req: Request, res: Response) => {
 const getAnnouncements = async (req: Request, res:Response) => {
   try {
     const allAnnouncement = await Announcement.find({}).sort( { 'timestamp': -1 } );
+    console.log(allAnnouncement);
     return res.json(allAnnouncement);
   } catch(error) {
     console.log(error);

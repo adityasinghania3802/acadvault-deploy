@@ -15,6 +15,6 @@ router.put(
   validateMyUserRequest,
   MyUserController.updateCurrentUser
 );
-router.get("/announcements",jwtCheck, jwtParse, MyUserController.getAnnouncements);
+router.get("/announcement",jwtCheck, jwtParse, MyUserController.getAnnouncements);
 
 export default router;

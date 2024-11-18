@@ -109,7 +109,45 @@ export const useGetAllMaterial = (code: String) => {
   const {
     data: allMaterial,
     isLoading,
-  } = useQuery("fetchCurrentUser", getAllMaterialRequest);
+  } = useQuery("fetchMaterial", getAllMaterialRequest);
 
   return { allMaterial, isLoading };
+}
+
+type GetAnnouncementRequest = {
+  materialName: string;
+  courseCode: string;
+  uploader: string;
+  createdAt: string;
+};
+
+type GetAllAnnouncementRequest = GetAnnouncementRequest[];
+
+export const useGetAllAnnouncement = () => {
+  const { getAccessTokenSilently } = useAuth0();
+  const GetAllAnnouncementRequest = async (): Promise<GetAllAnnouncementRequest> => {
+    console.log("Hiii");
+    const accessToken = await getAccessTokenSilently();
+    const response = await fetch(`${API_BASE_URL}/api/my/user/announcement`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response);
+
+    if (!response.ok) {
+      throw new Error("Failed to get Announcements");
+    }
+    
+    return response.json();
+  };
+  
+  const {
+    data: allAnnouncement,
+    isLoading,
+  } = useQuery("fetchAnnouncement", GetAllAnnouncementRequest);
+
+  return { allAnnouncement, isLoading };
 }

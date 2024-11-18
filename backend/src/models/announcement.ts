@@ -1,11 +1,17 @@
 import mongoose from "mongoose";
 
 const announcementSchema = new mongoose.Schema({
-  materialID: {
+  materialName: {
     type: String,
     required: true,
-    unique: true,
   },
+  courseCode: {
+    type: String,
+    required: true,
+  },
+  Uploader: {
+    type: String,
+  }
 },{
     timestamps: true,
 });

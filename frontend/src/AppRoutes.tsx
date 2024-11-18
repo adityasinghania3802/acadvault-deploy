@@ -11,6 +11,7 @@ import MaterialUploadPage from "./pages/MaterialUploadPage";
 import CourseCategoryContentPage from "./pages/CourseCategoryContentPage";
 import MaterialViewPage from "./pages/MaterialViewPage";
 import PendingMaterialViewPage from "./pages/PendingMaterialViewPage";
+import AnnouncementPage from "./pages/AnnouncementPage";
 
 const AppRoutes = () => {
   return (
@@ -39,6 +40,14 @@ const AppRoutes = () => {
           element={
             <Layout>
               <CourseList />
+            </Layout>
+          }
+        />
+        <Route
+          path="/announcement"
+          element={
+            <Layout>
+              <AnnouncementPage />
             </Layout>
           }
         />

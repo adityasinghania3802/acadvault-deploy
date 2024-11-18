@@ -6,7 +6,7 @@ export default function CourseList() {
   const { allCourse, isLoading: isGetLoading } = useGetAllCourses();
   const { category } = useParams();
   if (isGetLoading) {
-    return <span>Loading...</span>;
+    return <span className="text-white">Loading...</span>;
   }
 
   if (!allCourse) {
