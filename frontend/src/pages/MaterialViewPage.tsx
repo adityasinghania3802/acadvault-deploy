@@ -5,7 +5,7 @@ export default function MaterialViewPage() {
   const { myMaterial, isLoading: isGetLoading } = useGetMyMaterial();
 
   if (isGetLoading) {
-    return <span>Loading...</span>;
+    return <span className="text-white">Loading...</span>;
   }
 
   if(!myMaterial) {
@@ -13,7 +13,7 @@ export default function MaterialViewPage() {
   }
 
   if(myMaterial.length === 0) {
-    return <span>No Material Available</span>
+    return <span className="text-white">No Material Available</span>;
   }
 
   return (

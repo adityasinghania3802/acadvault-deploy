@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 export default function CourseCategoryContentPage() {
   const { code, materialCategory } = useParams();
   if(!code || !materialCategory) {
-    return <span>Unable to fetch Material</span>
+    return <span className="text-white">Unable to fetch Material</span>;
   }
   const { allMaterial, isLoading: isGetLoading } = useGetAllMaterial(code);
 
@@ -18,7 +18,7 @@ export default function CourseCategoryContentPage() {
   );
 
   if(filteredMaterial.length === 0) {
-    return <span>No Material Available</span>
+    return <span className="text-white">No Material Available</span>;
   }
 
   return (
